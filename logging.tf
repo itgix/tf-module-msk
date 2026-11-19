@@ -3,11 +3,13 @@ resource "aws_cloudwatch_log_group" "msk" {
   count             = var.cloudwatch_logs_enabled ? 1 : 0
   name              = local.cloudwatch_log_group_name
   retention_in_days = var.cloudwatch_log_group_retention_in_days
+  tags              = var.tags
 }
 
 resource "aws_iam_role" "firehose_role" {
   count = var.firehose_logs_enabled ? 1 : 0
   name  = local.firehose_role_name
+  tags  = var.tags
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
@@ -35,9 +37,7 @@ resource "aws_kinesis_firehose_delivery_stream" "msk" {
     bucket_arn = "arn:aws:s3:::${var.s3_log_bucket_name}"
   }
 
-  tags = {
-    LogDeliveryEnabled = "false"
-  }
+  tags = merge(var.tags, { LogDeliveryEnabled = "false" })
 
   lifecycle {
     ignore_changes = [

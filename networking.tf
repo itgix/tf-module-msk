@@ -20,12 +20,15 @@ module "msk_vpc" {
   intra_subnet_assign_ipv6_address_on_creation = false
   map_public_ip_on_launch                      = false
 
+  tags = var.tags
 }
 
 resource "aws_security_group" "msk_cluster_sg" {
   name        = local.msk_security_group_name
   description = "Rules for MSK cluster"
   vpc_id      = local.msk_vpc_id
+  tags        = var.tags
+
   dynamic "ingress" {
     for_each = [
       for rules in local.msk_security_group_ingress_rules : rules

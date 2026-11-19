@@ -18,7 +18,13 @@ variable "environment" {
 
 variable "product_name" {
   type        = string
-  description = "Bango platform instance (same as provided tag in default_tags)"
+  description = "Product / platform name, used in resource names"
+}
+
+variable "tags" {
+  description = "Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. The storage autoscaling target inside the CloudPosse MSK module is not tagged: that module exposes no input for it."
+  type        = map(string)
+  default     = {}
 }
 
 ################################################################################
