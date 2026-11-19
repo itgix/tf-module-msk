@@ -1,4 +1,10 @@
 
+## v1.0.3
+
+### Features
+
+* **tags:** The storage autoscaling target is now tagged with `tags`, so the module applies in accounts whose SCP mandates tags (itgix idp-installer#335). The CloudPosse MSK module's own target has no tags input, so its autoscaling is turned off (`autoscaling_enabled = false`) and this module creates `aws_appautoscaling_target.msk_storage` and `aws_appautoscaling_policy.msk_storage` with the same settings and policy name. `moved` blocks carry existing state over from `module.kafka.aws_appautoscaling_target.default[0]` and `module.kafka.aws_appautoscaling_policy.default[0]`, so an existing environment's plan shows only the tag addition on the target.
+
 ## v1.0.2
 
 ### Features
