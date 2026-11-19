@@ -99,13 +99,14 @@ module "local_module_name" {
 | <a name="input_msk_vpc_id"></a> [msk\_vpc\_id](#input\_msk\_vpc\_id) | ID of VPC to be used by MSK cluster. This value will be ignored in case msk\_create\_vpc is set to true. | `string` | `""` | no |
 | <a name="input_msk_vpc_subnet_newbits"></a> [msk\_vpc\_subnet\_newbits](#input\_msk\_vpc\_subnet\_newbits) | Number of additional bits with which to extend the prefix. This value will be ignored in case msk\_create\_vpc is set to false | `number` | `8` | no |
 | <a name="input_node_exporter_enabled"></a> [node\_exporter\_enabled](#input\_node\_exporter\_enabled) | Indicates whether you want to enable or disable the Node Exporter. | `bool` | `false` | no |
-| <a name="input_product_name"></a> [product\_name](#input\_product\_name) | Bango platform instance (same as provided tag in default\_tags) | `string` | n/a | yes |
+| <a name="input_product_name"></a> [product\_name](#input\_product\_name) | Product / platform name, used in resource names | `string` | n/a | yes |
 | <a name="input_s3_log_bucket_name"></a> [s3\_log\_bucket\_name](#input\_s3\_log\_bucket\_name) | Name of the S3 bucket to deliver logs to. Needed if `s3_logs_enabled` or `firehose_logs_enabled` are set to `true` | `string` | `""` | no |
 | <a name="input_s3_logs_enabled"></a> [s3\_logs\_enabled](#input\_s3\_logs\_enabled) | Indicates whether you want to enable or disable streaming broker logs to S3 | `bool` | `true` | no |
 | <a name="input_s3_logs_prefix"></a> [s3\_logs\_prefix](#input\_s3\_logs\_prefix) | Prefix to append to the S3 folder name logs are delivered to | `string` | `""` | no |
 | <a name="input_server_properties"></a> [server\_properties](#input\_server\_properties) | Contents of the server.properties file. Supported properties are documented in the [MSK Developer Guide](https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html) | `map(string)` | `{}` | no |
 | <a name="input_storage_autoscaling_max_capacity"></a> [storage\_autoscaling\_max\_capacity](#input\_storage\_autoscaling\_max\_capacity) | Maximum size the autoscaling policy can scale storage. Defaults to msk\_cluster\_broker\_node\_ebs\_volume\_size | `number` | `null` | no |
 | <a name="input_storage_autoscaling_target_value"></a> [storage\_autoscaling\_target\_value](#input\_storage\_autoscaling\_target\_value) | Percentage of storage used to trigger autoscaled storage increase | `number` | `80` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. The storage autoscaling target inside the CloudPosse MSK module is not tagged: that module exposes no input for it. | `map(string)` | `{}` | no |
 
 ## Outputs
 

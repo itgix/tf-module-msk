@@ -2,6 +2,7 @@
 resource "aws_kms_key" "msk" {
   description         = "MSK cluster encryption key"
   enable_key_rotation = true
+  tags                = var.tags
 }
 
 #tfsec:ignore:aws-ec2-add-description-to-security-group
@@ -56,4 +57,5 @@ module "kafka" {
   s3_logs_bucket  = var.s3_log_bucket_name
   s3_logs_prefix  = local.s3_logs_prefix
 
+  tags = var.tags
 }
