@@ -16,11 +16,11 @@ module "kafka" {
   enhanced_monitoring = var.enhanced_monitoring
 
   ## broker node group
-  broker_instance_type             = var.msk_cluster_broker_node_instance_type
-  broker_volume_size               = var.msk_cluster_broker_node_ebs_volume_size
-  broker_per_zone                  = var.msk_cluster_broker_per_zone
-  storage_autoscaling_max_capacity = var.storage_autoscaling_max_capacity
-  storage_autoscaling_target_value = var.storage_autoscaling_target_value
+  broker_instance_type = var.msk_cluster_broker_node_instance_type
+  broker_volume_size   = var.msk_cluster_broker_node_ebs_volume_size
+  broker_per_zone      = var.msk_cluster_broker_per_zone
+  # Storage autoscaling lives in autoscaling.tf so its target can carry tags.
+  autoscaling_enabled = false
 
   ## Networking
   vpc_id                        = local.msk_vpc_id

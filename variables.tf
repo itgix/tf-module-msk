@@ -22,7 +22,7 @@ variable "product_name" {
 }
 
 variable "tags" {
-  description = "Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. The storage autoscaling target inside the CloudPosse MSK module is not tagged: that module exposes no input for it."
+  description = "Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role, storage autoscaling target). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag."
   type        = map(string)
   default     = {}
 }

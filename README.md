@@ -62,6 +62,8 @@ module "local_module_name" {
 
 | Name | Type |
 |------|------|
+| [aws_appautoscaling_policy.msk_storage](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appautoscaling_policy) | resource |
+| [aws_appautoscaling_target.msk_storage](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appautoscaling_target) | resource |
 | [aws_cloudwatch_log_group.msk](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_iam_role.firehose_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_kinesis_firehose_delivery_stream.msk](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream) | resource |
@@ -106,7 +108,7 @@ module "local_module_name" {
 | <a name="input_server_properties"></a> [server\_properties](#input\_server\_properties) | Contents of the server.properties file. Supported properties are documented in the [MSK Developer Guide](https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html) | `map(string)` | `{}` | no |
 | <a name="input_storage_autoscaling_max_capacity"></a> [storage\_autoscaling\_max\_capacity](#input\_storage\_autoscaling\_max\_capacity) | Maximum size the autoscaling policy can scale storage. Defaults to msk\_cluster\_broker\_node\_ebs\_volume\_size | `number` | `null` | no |
 | <a name="input_storage_autoscaling_target_value"></a> [storage\_autoscaling\_target\_value](#input\_storage\_autoscaling\_target\_value) | Percentage of storage used to trigger autoscaled storage increase | `number` | `80` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. The storage autoscaling target inside the CloudPosse MSK module is not tagged: that module exposes no input for it. | `map(string)` | `{}` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role, storage autoscaling target). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. | `map(string)` | `{}` | no |
 
 ## Outputs
 
