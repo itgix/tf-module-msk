@@ -37,6 +37,8 @@ module "local_module_name" {
 - The variable `client_broker` needs to be changed to "TLS_PLAINTEXT" or "PLAINTEXT" values to allow communication with the brokers.
 - Plaintext traffic isn't possible with SASL/SCRAM or IAM access control methods, it is needed to set the variables of those methods to false.
 
+**NOTE**: Amazon MSK does not support storage autoscaling in ap-northeast-3 (Osaka), af-south-1 (Cape Town) and ap-southeast-5 (Malaysia) ([MSK Developer Guide](https://docs.aws.amazon.com/msk/latest/developerguide/msk-autoexpand.html)); `RegisterScalableTarget` is denied there with `AccessDeniedException: Account is not authorized`. Set `storage_autoscaling_enabled = false` in those regions; leaving it `true` fails the plan with a precondition error that names the region.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -106,6 +108,7 @@ module "local_module_name" {
 | <a name="input_s3_logs_enabled"></a> [s3\_logs\_enabled](#input\_s3\_logs\_enabled) | Indicates whether you want to enable or disable streaming broker logs to S3 | `bool` | `true` | no |
 | <a name="input_s3_logs_prefix"></a> [s3\_logs\_prefix](#input\_s3\_logs\_prefix) | Prefix to append to the S3 folder name logs are delivered to | `string` | `""` | no |
 | <a name="input_server_properties"></a> [server\_properties](#input\_server\_properties) | Contents of the server.properties file. Supported properties are documented in the [MSK Developer Guide](https://docs.aws.amazon.com/msk/latest/developerguide/msk-configuration-properties.html) | `map(string)` | `{}` | no |
+| <a name="input_storage_autoscaling_enabled"></a> [storage\_autoscaling\_enabled](#input\_storage\_autoscaling\_enabled) | Creates the broker storage autoscaling target and policy. Amazon MSK does not support storage autoscaling in ap-northeast-3 (Osaka), af-south-1 (Cape Town) and ap-southeast-5 (Malaysia); it must be false there, otherwise the plan fails. | `bool` | `true` | no |
 | <a name="input_storage_autoscaling_max_capacity"></a> [storage\_autoscaling\_max\_capacity](#input\_storage\_autoscaling\_max\_capacity) | Maximum size the autoscaling policy can scale storage. Defaults to msk\_cluster\_broker\_node\_ebs\_volume\_size | `number` | `null` | no |
 | <a name="input_storage_autoscaling_target_value"></a> [storage\_autoscaling\_target\_value](#input\_storage\_autoscaling\_target\_value) | Percentage of storage used to trigger autoscaled storage increase | `number` | `80` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the AWS resources created by this module (KMS key, MSK cluster, VPC with its subnets and route tables, security group, CloudWatch log group, Firehose delivery stream and its IAM role, storage autoscaling target). Merged over the Name tags the upstream modules set, so these tags win on conflict; the exception is the Firehose stream's LogDeliveryEnabled tag. | `map(string)` | `{}` | no |
