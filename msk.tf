@@ -3,6 +3,14 @@ resource "aws_kms_key" "msk" {
   description         = "MSK cluster encryption key"
   enable_key_rotation = true
   tags                = var.tags
+
+  lifecycle {
+    # Lives on the always-created KMS key so the check runs even when the autoscaling resources have count 0.
+    precondition {
+      condition     = !(var.storage_autoscaling_enabled && contains(local.msk_storage_autoscaling_unsupported_regions, var.aws_region))
+      error_message = "Amazon MSK does not support storage autoscaling in ${var.aws_region}; set storage_autoscaling_enabled = false."
+    }
+  }
 }
 
 #tfsec:ignore:aws-ec2-add-description-to-security-group

@@ -1,4 +1,10 @@
 
+## v1.0.4
+
+### Features
+
+* **autoscaling:** New `storage_autoscaling_enabled` input (`bool`, default `true`) that controls `aws_appautoscaling_target.msk_storage` and `aws_appautoscaling_policy.msk_storage`, now created with `count` (itgix idp-installer#335). Amazon MSK does not support storage autoscaling in ap-northeast-3, af-south-1 and ap-southeast-5, so it must be `false` there; leaving it `true` in one of those regions fails the plan with a precondition error naming the region. Chained `moved` blocks carry existing state to the `[0]` addresses, both from the un-indexed addresses of v1.0.3 and from `module.kafka.aws_appautoscaling_target.default[0]` / `module.kafka.aws_appautoscaling_policy.default[0]` of v1.0.2 and earlier, so an existing environment's plan shows only the moves.
+
 ## v1.0.3
 
 ### Features
